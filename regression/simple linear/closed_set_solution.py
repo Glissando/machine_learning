@@ -7,6 +7,7 @@ x = [0, 1, 2, 3, 4]
 y = [1, 3, 7, 13, 21]
 n = len(x)
 
+#helper functions
 def Numerator(isAverage = True):
     if isAverage:
         xVal = np.mean(x)
@@ -55,21 +56,31 @@ def Update_line(num, data, line):
     line.set_data(data)
     return line
 
+def slope_intercept_form(mx, b):
+    return mx + b
+    
 def OpenFile(filename):
-    with open(os.getcwd()+filename) as f:
+    pass
+    #with open(os.getcwd()+filename) as f:
         #Read json
 def DrawGraph():
     #Using slope interept form
     slope = Numerator() / Divisor()
     intercept = Intercept(slope)
     
+    #Create the line segment
     xline = []
     yline = []
-    for vx in range(len(x)):
-        vy = slope * vx + intercept
-        if vx == 0 or vx == len(x) - 1:
-            xline.append(vx)
-            yline.append(vy)
+    
+    xline.append(0)
+    yline.append(slope_intercept_form(0, intercept))
+    
+    xline.append(len(x) - 1)
+    yline.append(slope_intercept_form(slope * (len(x) - 1), intercept))
+    
+    #Debugging
+    #for vx in range(len(x)):
+        #vy = slope * vx + intercept
         #print (vx, vy)
     
     #Plot the input verticies
@@ -81,7 +92,7 @@ def DrawGraph():
     plt.xlabel('input_x')
     plt.ylabel('input_y')
     plt.title('Closed set solution to singular regression')
-    #plt.savefig('example.png')
+    #plt.savefig('closed_set.png')
     plt.show()
 
 DrawGraph()

@@ -89,8 +89,8 @@ def DrawGraph():
     #Plot the closed solution
     plt.plot(xline, yline)
     #Boilerplate
-    plt.xlabel('input_x')
-    plt.ylabel('input_y')
+    plt.xlabel('dependent variable')
+    plt.ylabel('independent variable')
     plt.title('Closed set solution to singular regression')
     #plt.savefig('closed_set.png')
     plt.show()

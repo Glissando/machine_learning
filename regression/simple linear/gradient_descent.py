@@ -32,8 +32,8 @@ def GradientDescent():
     errors = NegateList(y)
     magnitude = float("inf")
     
-    plt.xlabel('input x')
-    plt.ylabel('input y')
+    plt.xlabel('dependent variable')
+    plt.ylabel('independent variable')
     
     plt.title('gradient descent solution to singular regression')
     

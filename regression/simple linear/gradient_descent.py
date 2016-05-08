@@ -1,3 +1,4 @@
+import math
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as anim
@@ -10,20 +11,15 @@ initial_slope = 0
 #The derivative of the cost for the intercept is the sum of the errors
 #The derivative of the cost for the slope is the sum of the product of the errors and the input
 
-def Sum(list):
-    m = 0
-    for i in range(list):
-        m += list[i]
-    return m
-
-def Mean(list):
-    return Sum(list) / n
-
 def NegateList(list):
     a = []    
     for i in range(len(list)):
         a.append(-list[i])
     return a
+
+def UpdatePredictions(predictions, slope, intercept):
+    for i in range(n):
+        predictions[i] = slope * i + intercept
 
 def GradientDescent():
     intercept = initial_intercept
@@ -31,25 +27,45 @@ def GradientDescent():
     step_size = 0.05
     tolerance = 0.01
     
-    predictions = []
+    predictions = list(range(n))
+    UpdatePredictions(predictions, slope, intercept)
     errors = NegateList(y)
     magnitude = float("inf")
     
+    plt.xlabel('input x')
+    plt.ylabel('input y')
+    
+    plt.title('gradient descent solution to singular regression')
+    
     while(magnitude > tolerance):
         #Update intercept
-        error_sum = Sum(error)
+        error_sum = np.sum(errors)
         adjustment = step_size * error_sum
         intercept = intercept - adjustment
         
         #Update slope
         sum = []
         for i in range(len(errors)):
-            a.append(errors[i] * x[i])
-        sum = Sum(sum)
+            sum.append(errors[i] * x[i])
+        sum = np.sum(sum)
         adjustment = step_size * sum
+        slope = slope - adjustment
         magnitude = math.sqrt(error_sum**2 + sum**2)
         
         #Calculate predictions and errors
-        for i in range(len(x)):
+        for i in range(n):
             predictions[i] = slope * i + intercept
             errors[i] = predictions[i] - y[i]
+            #print(errors[i])
+        
+        #print(magnitude)
+    
+    for i in range(len(predictions)):
+        print(predictions[i])
+
+GradientDescent()
+#fig = plt.figure()
+
+#descentAni = anim.FuncAnimation(fig,)
+
+#descentAni.save('gradient_descent_example.mp4')

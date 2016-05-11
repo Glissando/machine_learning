@@ -1,29 +1,21 @@
-import math
-import matplotlib.pyplot as plt
+#import sframe
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.linear_model import LogisticRegression
 
 #Regex for parsing bounded words
 vectorizer = token_pattern(token_pattern=r'\b\w+\b')
 
 word_count = {}
-n = 0
-correct = 0
 
-#TODO implement gradient descent for picking most likely coefficients
+train_matrix = vectorizer.fit_transform(train_data['review_clean'])
+
+test_matrix = vectorizer.transform(test_data['review_clean'])
 
 #Remove punctuation so words with puncuation are treated the same e.g. Dog! Dog.
 def remove_puncuation(text):
     import string
     return text.translate(None, string.punctuation)
     
-
-def predict(score):
-    return 1 if score > 0 else 0
-
-def score(xi):
-    return xi['good'] + 1.5 * xi['great'] + -1 * ['bad'] + -1.5 * xi['awful'] # :x
-
-def probability(score):
-    return 1 / 1 + math.exp(-score)
-    
-def accuracy():
-    return correct / n
+def train():
+    logit = LogisticRegression()
+    logit.fit(train_matrix)

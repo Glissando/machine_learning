@@ -1,10 +1,9 @@
-import os
-import json
+
 import numpy as np
 import matplotlib.pyplot as plt
 
-x = [0, 1, 2, 3, 4]
-y = [1, 3, 7, 13, 21]
+x = [4.87*(10**-6), 5.4*(10**-6), 6.06*(10**-6), 6.89*(10**-6), 8*(10**-6), 9.52*(10**-6)]
+y = [100.3, 111.6, 124.3, 139.8, 158.2, 174.9]
 n = len(x)
 
 #helper functions
@@ -75,9 +74,9 @@ def DrawGraph():
     xline.append(0)
     yline.append(slope_intercept_form(0, intercept))
     
-    xline.append(len(x) - 1)
-    yline.append(slope_intercept_form(slope * (len(x) - 1), intercept))
-    
+    xline.append(x[len(x)-1])
+    yline.append(slope_intercept_form(slope * x[len(x)-1], intercept))
+    print(slope*x[len(x)-1])
     #Debugging
     #for vx in range(len(x)):
         #vy = slope * vx + intercept
@@ -86,13 +85,15 @@ def DrawGraph():
     #Plot the input verticies
     for i in range(len(x)):
         plt.plot(x[i], y[i], 'bo')
+        print(x[i])
     #Plot the closed solution
     plt.plot(xline, yline)
     #Boilerplate
-    plt.xlabel('dependent variable')
-    plt.ylabel('independent variable')
-    plt.title('Closed set solution to singular regression')
-    #plt.savefig('closed_set.png')
+    plt.xlabel('Inverse Volume')
+    plt.ylabel('Pressure')
+    plt.title('Graph of Pressure and Inverse Volume')
+    plt.savefig('pv_diagram.png')
+    #plt.xlim([0,0.00001])
     plt.show()
 
 DrawGraph()
